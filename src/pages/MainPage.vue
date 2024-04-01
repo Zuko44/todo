@@ -1,23 +1,23 @@
 <script setup lang="ts">
 import { Task } from '../types/index';
-//import TaskForm from '../components/TaskForm.vue';
+import TaskForm from '../components/TaskForm.vue';
 import TaskList from '../components/TaskList.vue';
 import { ref, onMounted, watch } from 'vue';
 
-// interface Emits {
-//   (e: 'createTask', value: Task): void;
-// }
+interface Emits {
+  (e: 'createTask', value: Task): void;
+}
 
-// const emit = defineEmits<Emits>();
+const emit = defineEmits<Emits>();
 
 const title = ref<string>('paper');
 const changeRename = ref<boolean>(false);
 const tasks = ref<Task[]>([]);
 
-// const createTaskHandler = (obj: Task) => {
-//   tasks.value.push(obj);
-//   parseStorage();
-// };
+const createTaskHandler = (obj: Task) => {
+  tasks.value.push(obj);
+  parseStorage();
+};
 
 const initRename = () => {
   const localStorageValue = localStorage.getItem('rename');
@@ -66,7 +66,7 @@ onMounted(() => {
         />
       </div>
     </div>
-    <!-- <TaskForm @createTask="(obj: Task) => createTaskHandler(obj)" /> -->
+    <TaskForm @createTask="(obj: Task) => createTaskHandler(obj)" />
     <TaskList :tasks="tasks" />
   </div>
 </template>
