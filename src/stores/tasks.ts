@@ -9,7 +9,6 @@ export const useTaskStore = defineStore('taskStore', () => {
   // }
 
   const tasks = ref<Task[]>([]);
-  const tasksOnLocalStorage = localStorage.getItem('tasks');
 
   const deleteTaskHandler = (id: number) => {
     tasks.value = tasks.value.filter((p) => p.id !== id);
@@ -20,7 +19,7 @@ export const useTaskStore = defineStore('taskStore', () => {
     saveTasks();
   };
 
-  const changedDoneHandler = (id: number) => {
+  const toggleDoneHandler = (id: number) => {
     /*const newTask: Task = { ...props.task, done: e.target.checked }
     newTask.done = e.target.checked*/
     const task = tasks.value.find((task: Task) => task.id === id);
@@ -34,22 +33,23 @@ export const useTaskStore = defineStore('taskStore', () => {
   };
 
   const saveTasks = () => {
-    const parsed = JSON.stringify(tasks);
+    const parsed = JSON.stringify(tasks.value);
     localStorage.setItem('tasks', parsed);
   };
 
-  const checkTasks = () => {
+  const getAndSetTasksFromLocalStorage = () => {
+    const tasksOnLocalStorage = localStorage.getItem('tasks');
     let tasksStorage: Task[] = [];
 
     if (tasksOnLocalStorage !== null) {
-      tasksStorage = JSON.parse(tasksOnLocalStorage)._value;
+      tasksStorage = JSON.parse(tasksOnLocalStorage);
       tasks.value = tasksStorage;
     }
   };
 
   onMounted(() => {
-    checkTasks();
+    getAndSetTasksFromLocalStorage();
   });
 
-  return { tasks, deleteTaskHandler, changedDoneHandler, createTaskHandler };
+  return { tasks, deleteTaskHandler, toggleDoneHandler, createTaskHandler };
 });

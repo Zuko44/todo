@@ -1,15 +1,13 @@
 <script setup lang="ts">
-import TaskItem from '../components/TaskItem.vue';
+import TaskList from '../components/TaskList.vue';
 import TaskForm from '../components/TaskForm.vue';
-import { useTaskStore } from '../stores/tasks';
 import { ref, onMounted, watch } from 'vue';
 
 const title = ref<string>('paper');
 const isTitle = ref<boolean>(false);
-const tasksStore = useTaskStore();
 
 const initTitle = () => {
-  const localStorageValue = localStorage.getItem('rename');
+  const localStorageValue = localStorage.getItem('title');
   if (localStorageValue) {
     title.value = localStorageValue;
   }
@@ -17,7 +15,7 @@ const initTitle = () => {
 
 watch(title, (newTitle) => {
   document.title = newTitle;
-  localStorage.setItem('rename', newTitle);
+  localStorage.setItem('title', newTitle);
 });
 
 onMounted(() => {
@@ -40,10 +38,7 @@ onMounted(() => {
       </div>
     </div>
     <TaskForm />
-    <div>
-      <h3>Список задач</h3>
-      <TaskItem v-for="task in tasksStore.tasks" :key="task.id" :task="task" />
-    </div>
+    <TaskList />
   </div>
 </template>
 
