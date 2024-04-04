@@ -15,10 +15,10 @@ interface Emits {
 
 const emit = defineEmits<Emits>();
 
-const toggleDone = (id: number) => {
+const toggleDoneHandler = (id: number) => {
   emit('toggleDone', id);
 };
-const deleteTask = (id: number) => {
+const deleteTaskHandler = (id: number) => {
   emit('deleteTask', id);
 };
 </script>
@@ -34,13 +34,13 @@ const deleteTask = (id: number) => {
           <input
             type="checkbox"
             :checked="props.task.done"
-            @click="toggleDone(task.id)"
+            @click="toggleDoneHandler(task.id)"
           />
           <label for="checkbox">done</label>
         </div>
       </div>
       <div class="task_btns">
-        <TaskButton @click="deleteTask(task.id)">Удалить</TaskButton>
+        <TaskButton @click="deleteTaskHandler(task.id)">Удалить</TaskButton>
       </div>
     </div>
   </div>
