@@ -1,43 +1,17 @@
 <script setup lang="ts">
-import { Task } from '../types/index';
+import TaskItem from '../components/TaskItem.vue';
 import TaskForm from '../components/TaskForm.vue';
-import TaskList from '../components/TaskList.vue';
+import { useTaskStore } from '../stores/tasks';
 import { ref, onMounted, watch } from 'vue';
 
-interface Emits {
-  (e: 'createTask', value: Task): void;
-}
-
-const emit = defineEmits<Emits>();
-
 const title = ref<string>('paper');
-const changeRename = ref<boolean>(false);
-const tasks = ref<Task[]>([]);
+const isTitle = ref<boolean>(false);
+const tasksStore = useTaskStore();
 
-const createTaskHandler = (obj: Task) => {
-  tasks.value.push(obj);
-  parseStorage();
-};
-
-const initRename = () => {
+const initTitle = () => {
   const localStorageValue = localStorage.getItem('rename');
   if (localStorageValue) {
     title.value = localStorageValue;
-  }
-};
-
-const parseStorage = () => {
-  const parsed = JSON.stringify(tasks.value);
-  localStorage.setItem('tasks', parsed);
-};
-
-const checkTasks = () => {
-  const localStorageValue = localStorage.getItem('tasks');
-  let tasksStorage: Task[] = [];
-
-  if (localStorageValue !== null) {
-    tasksStorage = JSON.parse(localStorageValue);
-    tasks.value = tasksStorage;
   }
 };
 
@@ -47,27 +21,29 @@ watch(title, (newTitle) => {
 });
 
 onMounted(() => {
-  initRename();
-  checkTasks();
+  initTitle();
 });
 </script>
 
 <template v-cloak>
   <div class="main">
     <div class="top">
-      <div v-if="!changeRename">
-        <h1 @click="changeRename = true">{{ title }}</h1>
+      <div v-if="!isTitle">
+        <h1 @click="isTitle = true">{{ title }}</h1>
       </div>
-      <div v-if="changeRename">
+      <div v-if="isTitle">
         <input
           v-model="title"
           placeholder="новое название"
-          @keyup.enter="changeRename = false"
+          @keyup.enter="isTitle = false"
         />
       </div>
     </div>
-    <TaskForm @createTask="(obj: Task) => createTaskHandler(obj)" />
-    <TaskList :tasks="tasks" />
+    <TaskForm />
+    <div>
+      <h3>Список задач</h3>
+      <TaskItem v-for="task in tasksStore.tasks" :key="task.id" :task="task" />
+    </div>
   </div>
 </template>
 
@@ -84,6 +60,10 @@ onMounted(() => {
 
 .top {
   margin: 15px 0px;
+}
+
+h3 {
+  margin-top: 15px;
 }
 
 [v-cloak] {

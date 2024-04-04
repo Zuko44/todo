@@ -1,29 +1,15 @@
 <script setup lang="ts">
-import { Task } from '../types/index';
 import TaskButton from './UI/TaskButton.vue';
+import { Task } from '../types/index';
+import { useTaskStore } from '../stores/tasks';
 
 interface Props {
   task: Task;
 }
 
-interface Emits {
-  (e: 'changedDone', value: boolean): void;
-  (e: 'remove'): void;
-}
+const tasksStore = useTaskStore();
 
 const props = defineProps<Props>();
-const emit = defineEmits<Emits>();
-
-const changedDoneHandler = (e: any) => {
-  /*const newTask: Task = { ...props.task, done: e.target.checked }
-  newTask.done = e.target.checked*/
-  emit('changedDone', e.target.checked);
-  //console.log(e.target.checked);
-};
-
-const deleteTaskHandler = () => {
-  emit('remove');
-};
 </script>
 
 <template>
@@ -37,13 +23,15 @@ const deleteTaskHandler = () => {
           <input
             type="checkbox"
             :checked="props.task.done"
-            @click="changedDoneHandler"
+            @click="tasksStore.changedDoneHandler(task.id)"
           />
           <label for="checkbox">done</label>
         </div>
       </div>
       <div class="task_btns">
-        <TaskButton @click="deleteTaskHandler">Удалить</TaskButton>
+        <TaskButton @click="tasksStore.deleteTaskHandler(task.id)"
+          >Удалить</TaskButton
+        >
       </div>
     </div>
   </div>

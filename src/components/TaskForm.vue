@@ -1,32 +1,19 @@
 <script setup lang="ts">
 import TaskButton from './UI/TaskButton.vue';
 import { Task } from '../types/index';
+import { useTaskStore } from '../stores/tasks';
 import { ref } from 'vue';
 
-// interface Emits {
-//   (e: 'createTask', value: Task): void;
-// }
-// const emit = defineEmits<Emits>();
-
-interface Emits {
-  (e: 'createTask', value: Task): void;
-}
-
-const emit = defineEmits<Emits>();
-
 const body = ref<string>('');
-
-// const createHandler = (e: string) => {
-//   emit('createTask', body.value);
-//   body.value = '';
-// };
+const tasksStore = useTaskStore();
 
 const createTaskHandler = (e: Task) => {
-  const id = Math.floor(Math.random() * 1000000);
-  const text = body.value;
-  const done = false;
-  const task: Task = { id: id, body: text, done: done };
-  emit('createTask', task);
+  const task: Task = {
+    id: Math.floor(Math.random() * 1000000),
+    body: body.value,
+    done: false,
+  };
+  tasksStore.createTaskHandler(task);
   body.value = '';
 };
 </script>
