@@ -1,37 +1,19 @@
 <script setup lang="ts">
-import { Task } from '../types/index';
 import TaskItem from './TaskItem.vue';
+import { useTaskStore } from '../stores/tasks';
 
-interface Emits {
-  (e: 'changedDone', value: boolean): void;
-  (e: 'remove'): void;
-}
+// interface Props {
+//   tasks: Task[];
+// }
 
-interface Props {
-  tasks: Task[];
-}
+// const props = defineProps<Props>();
+const tasksStore = useTaskStore();
 
-const props = defineProps<Props>();
-const emit = defineEmits<Emits>();
-
-//const tasks = ref<Task[]>([]);
-
-const changedDoneHandler = (id: number, isDone: boolean) => {
-  const task: Task = props.tasks.find((task) => task.id === id);
-  task.done = isDone;
-  parseStorage();
+const toggleDoneHandler = (id: number) => {
+  tasksStore.toggleDoneHandler(id);
 };
-
 const deleteTaskHandler = (id: number) => {
-  //props.tasks = props.tasks.filter((p) => p.id !== id);
-  const serialNumber: number = props.tasks.findIndex((task) => task.id === id);
-  props.tasks.splice(serialNumber, 1);
-  parseStorage();
-};
-
-const parseStorage = () => {
-  const parsed = JSON.stringify(props.tasks);
-  localStorage.setItem('tasks', parsed);
+  tasksStore.deleteTaskHandler(id);
 };
 </script>
 
@@ -39,11 +21,11 @@ const parseStorage = () => {
   <div>
     <h3>Список задач</h3>
     <TaskItem
-      v-for="task in props.tasks"
+      v-for="task in tasksStore.tasks"
       :key="task.id"
       :task="task"
-      @remove="deleteTaskHandler(task.id)"
-      @changedDone="(isDone: boolean) => changedDoneHandler(task.id, isDone)"
+      @deleteTask="deleteTaskHandler"
+      @toggleDone="toggleDoneHandler"
     />
   </div>
 </template>
