@@ -9,6 +9,7 @@ export const useTaskStore = defineStore('taskStore', () => {
   // }
 
   const tasks = ref<Task[]>([]);
+  const isActive = ref<number>(0);
 
   const deleteTaskHandler = (id: number) => {
     tasks.value = tasks.value.filter((p) => p.id !== id);
@@ -51,5 +52,11 @@ export const useTaskStore = defineStore('taskStore', () => {
     getAndSetTasksFromLocalStorage();
   });
 
-  return { tasks, deleteTaskHandler, toggleDoneHandler, createTaskHandler };
+  return {
+    tasks,
+    isActive,
+    deleteTaskHandler,
+    toggleDoneHandler,
+    createTaskHandler,
+  };
 });
