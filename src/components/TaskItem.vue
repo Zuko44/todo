@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import TaskButton from './UI/TaskButton.vue';
 import { Task } from '../types/index';
-import { useTaskStore } from '../stores/tasks';
 import { ref } from 'vue';
 
 interface Props {
@@ -12,11 +11,11 @@ const props = defineProps<Props>();
 
 const editTodo = ref<string>('');
 const isEditTodo = ref<boolean>(false);
-const tasksStore = useTaskStore();
 
 interface Emits {
   (e: 'toggleDone', value: number): void;
   (e: 'deleteTask', value: number): void;
+  (e: 'editTask', id: number, body: string): void;
 }
 
 const emit = defineEmits<Emits>();
@@ -34,7 +33,7 @@ const editTaskHandler = () => {
 };
 
 const saveEditedTaskHandler = (id: number, body: string) => {
-  tasksStore.editTaskHandler(id, body);
+  emit('editTask', id, body);
   isEditTodo.value = false;
 };
 </script>
