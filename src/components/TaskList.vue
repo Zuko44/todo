@@ -15,6 +15,9 @@ const toggleDoneHandler = (id: number) => {
 const deleteTaskHandler = (id: number) => {
   tasksStore.deleteTaskHandler(id);
 };
+const editTaskHandler = (id: number, body: string) => {
+  tasksStore.editTaskHandler(id, body);
+};
 </script>
 
 <template>
@@ -26,6 +29,7 @@ const deleteTaskHandler = (id: number) => {
       :task="task"
       @deleteTask="deleteTaskHandler"
       @toggleDone="toggleDoneHandler"
+      @editTask="editTaskHandler"
     />
   </div>
 </template>
