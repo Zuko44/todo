@@ -36,7 +36,7 @@ const switchTasksHandler = (id: number): Task[] => {
   <div>
     <h3>Список задач</h3>
     <TaskItem
-      v-for="task in switchTasksHandler(tasksStore.isActive)"
+      v-for="task in switchTasksHandler(tasksStore.activeFilterOfTasks)"
       :key="task.id"
       :task="task"
       @deleteTask="deleteTaskHandler"

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useTaskStore } from '../stores/tasks';
-import { ref, onMounted } from 'vue';
+import { onMounted } from 'vue';
 
 const tasksStore = useTaskStore();
 
 const selectAllTasks = () => {
-  tasksStore.isActive = 1;
+  tasksStore.activeFilterOfTasks = 1;
 };
 
 onMounted(() => {
@@ -14,21 +14,21 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="task">
+  <div class="taskFilter">
     <div @click="selectAllTasks">
-      <a :class="{ active: tasksStore.isActive === 1 }"
+      <a :class="{ active: tasksStore.activeFilterOfTasks === 1 }"
         >Все ({{ tasksStore.tasks.length }})</a
       >
     </div>
-    <div @click="tasksStore.isActive = 2">
-      <a :class="{ active: tasksStore.isActive === 2 }"
+    <div @click="tasksStore.activeFilterOfTasks = 2">
+      <a :class="{ active: tasksStore.activeFilterOfTasks === 2 }"
         >в работе({{
           tasksStore.tasks.filter((e) => e.done === false).length
         }})</a
       >
     </div>
-    <div @click="tasksStore.isActive = 3">
-      <a :class="{ active: tasksStore.isActive === 3 }"
+    <div @click="tasksStore.activeFilterOfTasks = 3">
+      <a :class="{ active: tasksStore.activeFilterOfTasks === 3 }"
         >сделано ({{
           tasksStore.tasks.filter((e) => e.done === true).length
         }})</a
@@ -38,7 +38,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.task {
+.taskFilter {
   padding: 15px;
   border: 2px solid blueviolet;
   text-align: left;
@@ -47,7 +47,7 @@ onMounted(() => {
   text-align: center;
 }
 
-.task div {
+.taskFilter div {
   display: inline-block;
   margin: 0px 15px;
 }
