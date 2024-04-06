@@ -12,32 +12,32 @@ interface Emits {
 
 const emit = defineEmits<Emits>();
 
-const switchTaskFilter = (id: number) => {
-  activeFilterOfTasks.value = id;
+const switchTaskFilter = (typeOfTasks: FilterTasks) => {
+  activeFilterOfTasks.value = typeOfTasks;
   emit('switchTaskFilter', activeFilterOfTasks.value);
 };
 
 onMounted(() => {
-  switchTaskFilter(0);
+  switchTaskFilter(FilterTasks.All);
 });
 </script>
 
 <template>
   <div class="taskFilter">
-    <div @click="switchTaskFilter(0)">
-      <a :class="{ active: activeFilterOfTasks === 0 }"
+    <div @click="switchTaskFilter(FilterTasks.All)">
+      <a :class="{ active: activeFilterOfTasks === FilterTasks.All }"
         >Все ({{ tasksStore.tasks.length }})</a
       >
     </div>
-    <div @click="switchTaskFilter(1)">
-      <a :class="{ active: activeFilterOfTasks === 1 }"
+    <div @click="switchTaskFilter(FilterTasks.InWork)">
+      <a :class="{ active: activeFilterOfTasks === FilterTasks.InWork }"
         >в работе({{
           tasksStore.tasks.filter((e) => e.done === false).length
         }})</a
       >
     </div>
-    <div @click="switchTaskFilter(2)">
-      <a :class="{ active: activeFilterOfTasks === 2 }"
+    <div @click="switchTaskFilter(FilterTasks.Done)">
+      <a :class="{ active: activeFilterOfTasks === FilterTasks.Done }"
         >сделано ({{
           tasksStore.tasks.filter((e) => e.done === true).length
         }})</a

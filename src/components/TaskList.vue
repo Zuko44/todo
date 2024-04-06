@@ -10,7 +10,7 @@ import { ref } from 'vue';
 // }
 
 // const props = defineProps<Props>();
-const typeOfStatusTasks = ref<FilterTasks>(FilterTasks.All);
+const activeFIlter = ref<FilterTasks>(FilterTasks.All);
 const tasksStore = useTaskStore();
 
 const toggleDoneHandler = (id: number) => {
@@ -20,8 +20,8 @@ const deleteTaskHandler = (id: number) => {
   tasksStore.deleteTaskHandler(id);
 };
 
-const switchTaskFilter = (activeFIlter: FilterTasks) => {
-  typeOfStatusTasks.value = activeFIlter;
+const switchTaskFilter = (currentFIlter: FilterTasks) => {
+  activeFIlter.value = currentFIlter;
 };
 
 const switchTasksHandler = (activeFIlter: FilterTasks): Task[] => {
@@ -44,7 +44,7 @@ const switchTasksHandler = (activeFIlter: FilterTasks): Task[] => {
   <div>
     <h3>Список задач</h3>
     <TaskItem
-      v-for="task in switchTasksHandler(typeOfStatusTasks)"
+      v-for="task in switchTasksHandler(activeFIlter)"
       :key="task.id"
       :task="task"
       @deleteTask="deleteTaskHandler"
