@@ -18,26 +18,26 @@ const switchTaskFilter = (id: number) => {
 };
 
 onMounted(() => {
-  switchTaskFilter(1);
+  switchTaskFilter(0);
 });
 </script>
 
 <template>
   <div class="taskFilter">
-    <div @click="switchTaskFilter(1)">
-      <a :class="{ active: activeFilterOfTasks === 1 }"
+    <div @click="switchTaskFilter(0)">
+      <a :class="{ active: activeFilterOfTasks === 0 }"
         >Все ({{ tasksStore.tasks.length }})</a
       >
     </div>
-    <div @click="switchTaskFilter(2)">
-      <a :class="{ active: activeFilterOfTasks === 2 }"
+    <div @click="switchTaskFilter(1)">
+      <a :class="{ active: activeFilterOfTasks === 1 }"
         >в работе({{
           tasksStore.tasks.filter((e) => e.done === false).length
         }})</a
       >
     </div>
-    <div @click="switchTaskFilter(3)">
-      <a :class="{ active: activeFilterOfTasks === 3 }"
+    <div @click="switchTaskFilter(2)">
+      <a :class="{ active: activeFilterOfTasks === 2 }"
         >сделано ({{
           tasksStore.tasks.filter((e) => e.done === true).length
         }})</a

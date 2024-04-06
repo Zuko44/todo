@@ -5,7 +5,7 @@ export interface Task {
 }
 
 export enum FilterTasks {
-  All = 1,
+  All,
   InWork,
   Done,
 }
