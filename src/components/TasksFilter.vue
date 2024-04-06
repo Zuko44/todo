@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import { FilterTasks } from '../types/index';
 import { useTaskStore } from '../stores/tasks';
 import { ref, onMounted } from 'vue';
 
 const tasksStore = useTaskStore();
-const activeFilterOfTasks = ref<number>(0);
+const activeFilterOfTasks = ref<FilterTasks>();
 
 interface Emits {
-  (e: 'switchTaskFilter', value: number): void;
+  (e: 'switchTaskFilter', value: FilterTasks): void;
 }
 
 const emit = defineEmits<Emits>();
