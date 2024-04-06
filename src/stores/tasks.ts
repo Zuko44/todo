@@ -32,6 +32,12 @@ export const useTaskStore = defineStore('taskStore', () => {
     saveTasks();
   };
 
+  const editTaskHandler = (id: number, body: string) => {
+    const task = tasks.value.find((task: Task) => task.id === id);
+    task.body = body;
+    saveTasks();
+  };
+
   const saveTasks = () => {
     const parsed = JSON.stringify(tasks.value);
     localStorage.setItem('tasks', parsed);
@@ -56,5 +62,6 @@ export const useTaskStore = defineStore('taskStore', () => {
     deleteTaskHandler,
     toggleDoneHandler,
     createTaskHandler,
+    editTaskHandler,
   };
 });

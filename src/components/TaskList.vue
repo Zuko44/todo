@@ -37,6 +37,9 @@ const switchTasksHandler = (activeFIlter: FilterTasks): Task[] => {
   }
   return switchedTasks;
 };
+const editTaskHandler = (id: number, body: string) => {
+  tasksStore.editTaskHandler(id, body);
+};
 </script>
 
 <template>
@@ -49,6 +52,7 @@ const switchTasksHandler = (activeFIlter: FilterTasks): Task[] => {
       :task="task"
       @deleteTask="deleteTaskHandler"
       @toggleDone="toggleDoneHandler"
+      @editTask="editTaskHandler"
     />
   </div>
 </template>
