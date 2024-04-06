@@ -1,34 +1,42 @@
 <script setup lang="ts">
 import { useTaskStore } from '../stores/tasks';
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const tasksStore = useTaskStore();
+const activeFilterOfTasks = ref<number>(0);
 
-const selectAllTasks = () => {
-  tasksStore.activeFilterOfTasks = 1;
+interface Emits {
+  (e: 'switchTaskFilter', value: number): void;
+}
+
+const emit = defineEmits<Emits>();
+
+const switchTaskFilter = (id: number) => {
+  activeFilterOfTasks.value = id;
+  emit('switchTaskFilter', activeFilterOfTasks.value);
 };
 
 onMounted(() => {
-  selectAllTasks();
+  switchTaskFilter(1);
 });
 </script>
 
 <template>
   <div class="taskFilter">
-    <div @click="selectAllTasks">
-      <a :class="{ active: tasksStore.activeFilterOfTasks === 1 }"
+    <div @click="switchTaskFilter(1)">
+      <a :class="{ active: activeFilterOfTasks === 1 }"
         >Все ({{ tasksStore.tasks.length }})</a
       >
     </div>
-    <div @click="tasksStore.activeFilterOfTasks = 2">
-      <a :class="{ active: tasksStore.activeFilterOfTasks === 2 }"
+    <div @click="switchTaskFilter(2)">
+      <a :class="{ active: activeFilterOfTasks === 2 }"
         >в работе({{
           tasksStore.tasks.filter((e) => e.done === false).length
         }})</a
       >
     </div>
-    <div @click="tasksStore.activeFilterOfTasks = 3">
-      <a :class="{ active: tasksStore.activeFilterOfTasks === 3 }"
+    <div @click="switchTaskFilter(3)">
+      <a :class="{ active: activeFilterOfTasks === 3 }"
         >сделано ({{
           tasksStore.tasks.filter((e) => e.done === true).length
         }})</a

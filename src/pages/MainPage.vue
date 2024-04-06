@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import TaskList from '../components/TaskList.vue';
 import TaskForm from '../components/TaskForm.vue';
-import TasksFilter from '../components/TasksFilter.vue';
 import { ref, onMounted, watch } from 'vue';
 
 const title = ref<string>('paper');
@@ -39,7 +38,6 @@ onMounted(() => {
       </div>
     </div>
     <TaskForm />
-    <TasksFilter />
     <TaskList />
   </div>
 </template>

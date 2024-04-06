@@ -9,7 +9,6 @@ export const useTaskStore = defineStore('taskStore', () => {
   // }
 
   const tasks = ref<Task[]>([]);
-  const activeFilterOfTasks = ref<number>(0);
 
   const deleteTaskHandler = (id: number) => {
     tasks.value = tasks.value.filter((p) => p.id !== id);
@@ -54,7 +53,6 @@ export const useTaskStore = defineStore('taskStore', () => {
 
   return {
     tasks,
-    activeFilterOfTasks,
     deleteTaskHandler,
     toggleDoneHandler,
     createTaskHandler,
