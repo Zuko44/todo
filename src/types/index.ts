@@ -3,3 +3,9 @@ export interface Task {
   body: string;
   done: boolean;
 }
+
+export enum FilterTasks {
+  All,
+  InWork,
+  Done,
+}
