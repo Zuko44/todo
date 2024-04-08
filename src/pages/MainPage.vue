@@ -49,6 +49,10 @@ onMounted(() => {
   box-sizing: border-box;
 }
 
+body {
+  background: RGB(241, 245, 249);
+}
+
 .main {
   text-align: center;
 }

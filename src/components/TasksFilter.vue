@@ -47,9 +47,13 @@ onMounted(() => {
 </template>
 
 <style scoped>
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
 .taskFilter {
   padding: 15px;
-  border: 2px solid blueviolet;
   text-align: left;
   width: 95%;
   margin: 15px auto 0px;
@@ -62,7 +66,8 @@ onMounted(() => {
 }
 
 .active {
-  color: red;
+  color: RGB(26, 171, 233);
+  border-bottom: 1px solid RGB(26, 171, 233);
 }
 
 a:hover {
@@ -74,7 +79,7 @@ a:active {
 }
 
 a {
-  color: blue;
+  color: RGB(147, 147, 148);
   cursor: pointer;
 }
 </style>

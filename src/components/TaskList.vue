@@ -45,7 +45,6 @@ const editTaskHandler = (id: number, body: string) => {
 <template>
   <TasksFilter @switchTaskFilter="switchTaskFilter" />
   <div>
-    <h3>Список задач</h3>
     <TaskItem
       v-for="task in switchTasksHandler(activeFIlter)"
       :key="task.id"
